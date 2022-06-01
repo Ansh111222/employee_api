@@ -1,7 +1,6 @@
 ## Instructions for Employee API
 
-### Install libraries
-```
+### Install libraries from requirements file```
 pip install fastapi
 pip install uvicorn
 pip install requests

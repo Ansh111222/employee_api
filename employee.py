@@ -28,7 +28,6 @@ def read_api(db: Session = Depends(get_db)):
 
 @app.post("/employees")
 def create_employee(employee: Employee, db: Session = Depends(get_db)):
-
     emp_model = models.Employee()
     emp_model.name = employee.name
 
@@ -40,13 +39,15 @@ def create_employee(employee: Employee, db: Session = Depends(get_db)):
 
 @app.get("/employees/{employee_id}")
 def get_employee(employee_id: int, db: Session = Depends(get_db)):
-
-    emp_model = db.query(models.Employee).filter(models.Employee.employee_id == employee_id).first()
+    emp_model = (
+        db.query(models.Employee)
+        .filter(models.Employee.employee_id == employee_id)
+        .first()
+    )
 
     if emp_model is None:
         raise HTTPException(
-            status_code=404,
-            detail=f"ID {employee_id} : Does not exist"
+            status_code=404, detail=f"ID {employee_id} : Does not exist"
         )
 
     return emp_model
